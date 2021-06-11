@@ -1,9 +1,10 @@
 from typing import ContextManager
 from django.http import HttpResponse
-from django.template import *
+from django.template import Template, Context
 import datetime
+from django.shortcuts import render
+from django.template import loader
 
-from django.template.context import RenderContext
 #Primera vista que devuleve una respuesta
 def HolaMundo(request):
     fecha_act = datetime.datetime.now().year
@@ -36,11 +37,12 @@ def edadFutura(request, anio, edadAct):
     </html>''' %(anio, edadFutura)
     return HttpResponse(pagina)
 
+#Cargador manual
 def edadFuturaTemplate(request, anio, edadAct):
     direfencia = anio - datetime.datetime.now().year
     edadFutura = edadAct + direfencia
     #Ruta donde esta la plantilla
-    doc_externo = open("./Templates/PlantillaEdad.html")
+    doc_externo = open("Proyecto1\Templates\PlantillaEdad.html")
     #Se lee la plantilla
     plt = Template(doc_externo.read())
     #Se cierra el documento
@@ -50,3 +52,24 @@ def edadFuturaTemplate(request, anio, edadAct):
     #Se renderiza la pagina con el contexto
     pagina = plt.render(contexto)
     return HttpResponse(pagina)
+
+#Cargador con Loader
+def edadFuturaTemplateWtLoader(request, anio, edadAct):
+    direfencia = anio - datetime.datetime.now().year
+    edadFutura = edadAct + direfencia
+    #Primero importar Templates.loader
+    #Dentro de settings establecer la ruta donde estan las plantillas
+    #Crear una varibles y cargar la plantilla con loader
+    doc_externo = loader.get_template('PlantillaEdad.html') #loader devuelve un Template diferente
+    #Pasar el contexto directamente como un diccionario
+    pagina = doc_externo.render({"anioAct":anio,"edadFutura":edadFutura})
+    return HttpResponse(pagina)
+
+#Shortcuts
+def edadFuturaTemplateShortcuts(request, anio, edadAct):
+    direfencia = anio - datetime.datetime.now().year
+    edadFutura = edadAct + direfencia
+    #Request, Template, Diccionario
+    return render(request, "PlantillaEdad.html",{"anioAct":anio,"edadFutura":edadFutura})
+
+#Plantillas Incrustadas

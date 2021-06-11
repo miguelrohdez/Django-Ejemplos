@@ -1,11 +1,25 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head>
         <title> Calcular edad </title>
+        <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" >
     </head>
     <body>
+        {# Permite incluir plantillas inscrustadas #}
+        {# Tambien permite cargarla desde subdirectorios #}
+        {% include "NavBar.html" %}
         <center>
             <h1> Calcula tu edad en el Futuro </h1>
-            <h2>En el año {{anioAct}} tendras {{edadFutura}} años </h2>
+            <h2>En el a&ntildeo {{anioAct}} tendras {{edadFutura}}  a&ntildeos </h2>
+             {% for i in "12345" %}
+                <p>Lista numero: {{i}}</p>
+             {% endfor %}
+             {# Tambien se perminten if, if else, etc-> comentario de una linea #}
+             {% comment %}
+             Comentario de 
+             varias lineas 
+             asd
+             {% endcomment %}
         </center>
     </body>
 </html>

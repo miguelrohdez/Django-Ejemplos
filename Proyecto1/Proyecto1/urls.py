@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Proyecto1.views import HolaMundo, edadFutura
+from Proyecto1.views import HolaMundo, edadFuturaTemplateShortcuts
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('HolaMundo/', HolaMundo),
-    path('edad/<int:edadAct>/<int:anio>', edadFutura),
+    path('edad/<int:edadAct>/<int:anio>', edadFuturaTemplateShortcuts),
 ]
